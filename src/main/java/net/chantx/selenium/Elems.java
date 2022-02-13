@@ -4,20 +4,18 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class Elem {
+import java.util.List;
+
+public class Elems {
   public Elem parent;
-  public ByType by;
+  public Elem.ByType by;
   public String query;
 
-  public enum ByType {
-    id, xpath, className, cssSelector, linkText, name, partialLinkText, tagName
-  }
-
-  public WebElement get (WebDriver driver) {
+  public List<WebElement> get (WebDriver driver) {
     if (parent == null) {
-      return driver.findElement(getBy());
+      return driver.findElements(getBy());
     } else {
-      return parent.get(driver).findElement(getBy());
+      return parent.get(driver).findElements(getBy());
     }
   }
 

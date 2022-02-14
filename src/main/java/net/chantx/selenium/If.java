@@ -20,24 +20,10 @@ public class If implements Action {
     elemVisible, elemNotVisible, elemExist, elemNotExist
   }
 
-  public WebDriver dwork (WebDriver driver) {
-    LOG.info("If elem " + elem.query + " " + operator + " " + arg + ".");
-    if (judge(driver, arg)) {
-      if (then != null) {
-        then.dwork(driver);
-      }
-    } else {
-      if (el != null) {
-        el.dwork(driver);
-      }
-    }
-    return driver;
-  }
-
   public WebDriver dwork (WebDriver driver, String[] args) {
     String s = Args.replace(arg, args);
     LOG.info("If elem " + elem.query + " " + operator + " " + s + ".");
-    if (judge(driver, s)) {
+    if (judge(driver, s, args)) {
       if (then != null) {
         then.dwork(driver, args);
       }
@@ -49,21 +35,21 @@ public class If implements Action {
     return driver;
   }
 
-  private boolean judge (WebDriver driver, String param) {
+  private boolean judge (WebDriver driver, String param, String[] args) {
     String value = "";
     if (operator == Operator.valueEqual
         || operator == Operator.valueNotEqual
         || operator == Operator.valueLessThanOrEqual
         || operator == Operator.valueGreaterThan
         || operator == Operator.valueGreaterThanOrEqual) {
-      value = elem.get(driver).getAttribute("value");
+      value = elem.get(driver, args).getAttribute("value");
     } else if (operator == Operator.textEqual
         || operator == Operator.textNotEqual
         || operator == Operator.textLessThan
         || operator == Operator.textLessThanOrEqual
         || operator == Operator.textGreaterThan
         || operator == Operator.textGreaterThanOrEqual) {
-      value = elem.get(driver).getText();
+      value = elem.get(driver, args).getText();
     }
     return switch (operator) {
       case valueEqual -> value == param;
@@ -78,10 +64,10 @@ public class If implements Action {
       case textLessThanOrEqual -> parseFloat(value) <= parseFloat(param);
       case textGreaterThan -> parseFloat(value) > parseFloat(param);
       case textGreaterThanOrEqual -> parseFloat(value) >= parseFloat(param);
-      case elemVisible -> elemVisible(driver);
-      case elemNotVisible -> !elemVisible(driver);
-      case elemExist -> elemExist(driver);
-      case elemNotExist -> !elemExist(driver);
+      case elemVisible -> elemVisible(driver, args);
+      case elemNotVisible -> !elemVisible(driver, args);
+      case elemExist -> elemExist(driver, args);
+      case elemNotExist -> !elemExist(driver, args);
     };
   }
 
@@ -89,19 +75,20 @@ public class If implements Action {
     return Float.parseFloat(s);
   }
 
-  private boolean elemVisible (WebDriver driver) {
-    if (elemExist(driver)) {
-      return elem.get(driver).isDisplayed();
+  private boolean elemVisible (WebDriver driver, String[] args) {
+    if (elemExist(driver, args)) {
+      return elem.get(driver, args).isDisplayed();
     } else {
       return false;
     }
   }
 
-  private boolean elemExist (WebDriver driver) {
+  private boolean elemExist (WebDriver driver, String[] args) {
     if (elem.parent == null) {
-      return !driver.findElements(elem.getBy()).isEmpty();
+      return !driver.findElements(elem.getBy(args)).isEmpty();
     } else {
-      return !elem.parent.get(driver).findElements(elem.getBy()).isEmpty();
+      return !elem.parent.get(driver, args)
+        .findElements(elem.getBy(args)).isEmpty();
     }
   }
 }

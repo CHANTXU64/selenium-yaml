@@ -11,16 +11,6 @@ public class Steps extends ArrayList<Action> implements Action {
 
   private long uid = ++UNIQUE_ID;
 
-  public WebDriver dwork (WebDriver driver) {
-    LOG.info("Steps dwork " + uid + ", count: " + size());
-    for (int i = 0; i < size(); ++i) {
-      Action step = get(i);
-      driver = step.dwork(driver);
-    }
-    LOG.info("Steps END " + uid);
-    return driver;
-  }
-
   public WebDriver dwork (WebDriver driver, String[] args) {
     LOG.info("Steps dwork " + uid + ", count: " + size());
     for (int i = 0; i < size(); ++i) {

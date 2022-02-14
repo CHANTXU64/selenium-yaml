@@ -9,13 +9,9 @@ public class Click implements Action {
 
   public Elem elem;
 
-  public WebDriver dwork (WebDriver driver) {
-    LOG.info("Click elem: " + elem.by + " - " + elem.query);
-    elem.get(driver).click();
-    return driver;
-  }
-
   public WebDriver dwork (WebDriver driver, String[] args) {
-    return dwork(driver);
+    LOG.info("Click elem: " + elem.by + " - " + elem.getQuery(args));
+    elem.get(driver, args).click();
+    return driver;
   }
 }

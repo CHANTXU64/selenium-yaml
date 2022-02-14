@@ -13,14 +13,6 @@ public class Elem {
     id, xpath, className, cssSelector, linkText, name, partialLinkText, tagName
   }
 
-  public WebElement get (WebDriver driver) {
-    if (parent == null) {
-      return driver.findElement(getBy());
-    } else {
-      return parent.get(driver).findElement(getBy());
-    }
-  }
-
   public WebElement get (WebDriver driver, String[] args) {
     if (parent == null) {
       return driver.findElement(getBy(args));
@@ -29,15 +21,12 @@ public class Elem {
     }
   }
 
-  public By getBy () {
-    return getBy_main(query);
+  public String getQuery (String[] args) {
+    return Args.replace(query, args);
   }
 
   public By getBy (String[] args) {
-    return getBy_main(Args.replace(query, args));
-  }
-
-  private By getBy_main (String q) {
+    String q = getQuery(args);
     return switch (by) {
       case id -> By.id(q);
       case xpath -> By.xpath(q);

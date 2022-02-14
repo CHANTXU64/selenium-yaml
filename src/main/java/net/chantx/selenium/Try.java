@@ -13,19 +13,6 @@ public class Try extends ArrayList<Action> implements Action {
 
   private long uid = ++UNIQUE_ID;
 
-  public WebDriver dwork (WebDriver driver) {
-    LOG.info("Try dwork " + uid + ", count: " + size());
-    try {
-      for (int i = 0; i < size(); ++i) {
-        Action step = get(i);
-        driver = step.dwork(driver);
-      }
-    } catch (Exception e) {
-    }
-    LOG.info("Try END " + uid);
-    return driver;
-  }
-
   public WebDriver dwork (WebDriver driver, String[] args) {
     LOG.info("Try dwork " + uid + ", count: " + size());
     try {
@@ -34,6 +21,7 @@ public class Try extends ArrayList<Action> implements Action {
         driver = step.dwork(driver, args);
       }
     } catch (Exception e) {
+      e.printStackTrace();
     }
     LOG.info("Try END " + uid);
     return driver;

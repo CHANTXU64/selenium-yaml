@@ -11,14 +11,6 @@ public class Elems {
   public Elem.ByType by;
   public String query;
 
-  public List<WebElement> get (WebDriver driver) {
-    if (parent == null) {
-      return driver.findElements(getBy());
-    } else {
-      return parent.get(driver).findElements(getBy());
-    }
-  }
-
   public List<WebElement> get (WebDriver driver, String[] args) {
     if (parent == null) {
       return driver.findElements(getBy(args));
@@ -27,15 +19,12 @@ public class Elems {
     }
   }
 
-  public By getBy () {
-    return getBy_main(query);
+  public String getQuery (String[] args) {
+    return Args.replace(query, args);
   }
 
   public By getBy (String[] args) {
-    return getBy_main(Args.replace(query, args));
-  }
-
-  private By getBy_main (String q) {
+    String q = getQuery(args);
     return switch (by) {
       case id -> By.id(q);
       case xpath -> By.xpath(q);

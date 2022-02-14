@@ -21,21 +21,17 @@ public class Wait implements Action {
     visible, exist, notVisible, notExist
   }
 
-  public WebDriver dwork (WebDriver driver) {
-    LOG.info("Wait elem: " + elem.by + " - " + elem.query + " - " + until
-        + " - " + timeout);
+  public WebDriver dwork (WebDriver driver, String[] args) {
+    LOG.info("Wait elem: " + elem.by + " - "
+        + elem.getQuery(args) + " - " + until + " - " + timeout);
     new WebDriverWait(driver, Duration.ofSeconds(timeout))
-      .until(getUntil(driver));
+      .until(getUntil(driver, args));
     return driver;
   }
 
-  public WebDriver dwork (WebDriver driver, String[] args) {
-    return dwork(driver);
-  }
-
-  private ExpectedCondition<Boolean> getUntil (WebDriver driver) {
+  private ExpectedCondition<Boolean> getUntil (WebDriver driver, String[] args) {
     if (elem.parent == null) {
-      By by = elem.getBy();
+      By by = elem.getBy(args);
       return switch (until) {
         case visible -> ExpectedConditions
           .and(ExpectedConditions.visibilityOfElementLocated(by));
@@ -47,8 +43,8 @@ public class Wait implements Action {
           .not(ExpectedConditions.presenceOfElementLocated(by));
       };
     } else {
-      WebElement parent = elem.parent.get(driver);
-      By by = elem.getBy();
+      WebElement parent = elem.parent.get(driver, args);
+      By by = elem.getBy(args);
       return switch (until) {
         case visible -> ExpectedConditions.and(ExpectedConditions
             .visibilityOfNestedElementsLocatedBy(parent, by));

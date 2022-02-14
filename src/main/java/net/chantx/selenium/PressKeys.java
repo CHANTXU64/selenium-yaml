@@ -10,17 +10,18 @@ public class PressKeys implements Action {
   public Elem elem;
   public CharSequence[] keys;
 
-  public WebDriver dwork (WebDriver driver) {
+  public WebDriver dwork (WebDriver driver, String[] args) {
+    log(args);
+    elem.get(driver, args).sendKeys(keys);
+    return driver;
+  }
+
+  private void log (String[] args) {
     String s = keys[0].toString();
     for (int i = 1; i < keys.length; ++i) {
       s += "," + keys[i];
     }
-    LOG.info("PressKeys elem: " + elem.by + " - " + elem.query + "\nkeys: " + s);
-    elem.get(driver).sendKeys(keys);
-    return driver;
-  }
-
-  public WebDriver dwork (WebDriver driver, String[] args) {
-    return dwork(driver);
+    LOG.info("PressKeys elem: " + elem.by + " - "
+        + elem.getQuery(args) + "\nkeys: " + s);
   }
 }

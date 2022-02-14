@@ -11,14 +11,10 @@ public class RightClick implements Action {
 
   public Elem elem;
 
-  public WebDriver dwork (WebDriver driver) {
-    LOG.info("RightClick elem: " + elem.by + " - " + elem.query);
-    Actions action = new Actions(driver);
-    action.contextClick(elem.get(driver)).perform();
-    return driver;
-  }
-
   public WebDriver dwork (WebDriver driver, String[] args) {
-    return dwork(driver);
+    LOG.info("RightClick elem: " + elem.by + " - " + elem.getQuery(args));
+    Actions action = new Actions(driver);
+    action.contextClick(elem.get(driver, args)).perform();
+    return driver;
   }
 }

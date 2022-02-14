@@ -52,18 +52,16 @@ public class If implements Action {
       value = elem.get(driver, args).getText();
     }
     return switch (operator) {
-      case valueEqual -> value == param;
-      case valueNotEqual -> value != param;
-      case valueLessThan -> parseFloat(value) < parseFloat(param);
-      case valueLessThanOrEqual -> parseFloat(value) <= parseFloat(param);
-      case valueGreaterThan -> parseFloat(value) > parseFloat(param);
-      case valueGreaterThanOrEqual -> parseFloat(value) >= parseFloat(param);
-      case textEqual -> value == param;
-      case textNotEqual -> value != param;
-      case textLessThan -> parseFloat(value) < parseFloat(param);
-      case textLessThanOrEqual -> parseFloat(value) <= parseFloat(param);
-      case textGreaterThan -> parseFloat(value) > parseFloat(param);
-      case textGreaterThanOrEqual -> parseFloat(value) >= parseFloat(param);
+      case valueEqual, textEqual -> value.equals(param);
+      case valueNotEqual, textNotEqual -> !value.equals(param);
+      case valueLessThan, textLessThan ->
+        parseFloat(value) < parseFloat(param);
+      case valueLessThanOrEqual, textLessThanOrEqual ->
+        parseFloat(value) <= parseFloat(param);
+      case valueGreaterThan, textGreaterThan ->
+        parseFloat(value) > parseFloat(param);
+      case valueGreaterThanOrEqual, textGreaterThanOrEqual ->
+        parseFloat(value) >= parseFloat(param);
       case elemVisible -> elemVisible(driver, args);
       case elemNotVisible -> !elemVisible(driver, args);
       case elemExist -> elemExist(driver, args);

@@ -5,13 +5,11 @@ import org.openqa.selenium.WebDriver;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-//TODO 增加Catch输出
-
 public class Try extends ArrayList<Action> implements Action {
   private static final Logger LOG = Logger.getLogger(Try.class.getName());
   private static long UNIQUE_ID = 0;
 
-  private long uid = ++UNIQUE_ID;
+  private final long uid = ++UNIQUE_ID;
 
   public WebDriver dwork (WebDriver driver, String[] args) {
     LOG.info("Try dwork " + uid + ", count: " + size());

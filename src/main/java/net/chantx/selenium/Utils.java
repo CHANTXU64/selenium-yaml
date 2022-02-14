@@ -64,10 +64,7 @@ public class Utils {
 
   public static WebDriver dwork (Map<String, Object> m,
       WebDriver driver, String actionName) {
-    assert m.get(actionName) instanceof Action;
-    Action s = (Action) m.get(actionName);
-    s.dwork(driver);
-    return driver;
+    return dwork(m, driver, actionName, new String[] {});
   }
 
   public static WebDriver dwork (Map<String, Object> m,
@@ -80,15 +77,25 @@ public class Utils {
 
   public static WebElement getElem (Map<String, Object> m,
       WebDriver driver, String elemName) {
+    return getElem(m, driver, elemName, new String[] {});
+  }
+
+  public static WebElement getElem (Map<String, Object> m,
+      WebDriver driver, String elemName, String[] args) {
     assert m.get(elemName) instanceof Elem;
     Elem elem = (Elem) m.get(elemName);
-    return elem.get(driver);
+    return elem.get(driver, args);
   }
 
   public static List<WebElement> getElems (Map<String, Object> m,
       WebDriver driver, String elemsName) {
+    return getElems(m, driver, elemsName, new String[] {});
+  }
+
+  public static List<WebElement> getElems (Map<String, Object> m,
+      WebDriver driver, String elemsName, String[] args) {
     assert m.get(elemsName) instanceof Elems;
     Elems elems = (Elems) m.get(elemsName);
-    return elems.get(driver);
+    return elems.get(driver, args);
   }
 }

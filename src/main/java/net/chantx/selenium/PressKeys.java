@@ -17,11 +17,12 @@ public class PressKeys implements Action {
   }
 
   private void log (String[] args) {
-    String s = keys[0].toString();
+    StringBuffer buf = new StringBuffer();
+    buf.append(keys[0]);
     for (int i = 1; i < keys.length; ++i) {
-      s += "," + keys[i];
+      buf.append(",").append(keys[i]);
     }
     LOG.info("PressKeys elem: " + elem.by + " - "
-        + elem.getQuery(args) + "\nkeys: " + s);
+        + elem.getQuery(args) + "\nkeys: " + buf);
   }
 }

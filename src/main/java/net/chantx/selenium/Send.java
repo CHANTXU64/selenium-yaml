@@ -22,11 +22,12 @@ public class Send implements Action {
   }
 
   private void log (String[] str, String[] args) {
-    String s = str[0];
+    StringBuffer buf = new StringBuffer();
+    buf.append(str[0]);
     for (int i = 1; i < str.length; ++i) {
-      s += "," + str[i];
+      buf.append(",").append(str[i]);
     }
     LOG.info("Send elem: " + elem.by + " - "
-        + elem.getQuery(args) + "\ntext: " + s);
+        + elem.getQuery(args) + "\ntext: " + buf);
   }
 }

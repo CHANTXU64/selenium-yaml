@@ -9,10 +9,6 @@ import org.junit.Test;
 import org.apache.commons.lang3.RandomStringUtils;
 
 public class ArgsTest extends Args {
-  // @Test
-  // void testReplace () {
-  // }
-
   @Test
   public void testIsMatch () {
     assertTrue(Args.isMatch("___ARG_0___"));

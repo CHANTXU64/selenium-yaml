@@ -9,7 +9,7 @@ public class Steps extends ArrayList<Action> implements Action {
   private static final Logger LOG = Logger.getLogger(Steps.class.getName());
   private static long UNIQUE_ID = 0;
 
-  private long uid = ++UNIQUE_ID;
+  private final long uid = ++UNIQUE_ID;
 
   public WebDriver dwork (WebDriver driver, String[] args) {
     LOG.info("Steps dwork " + uid + ", count: " + size());

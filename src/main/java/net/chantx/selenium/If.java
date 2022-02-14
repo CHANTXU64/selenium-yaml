@@ -3,8 +3,6 @@ package net.chantx.selenium;
 import org.openqa.selenium.WebDriver;
 
 import java.util.logging.Logger;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 
 public class If implements Action {
   private static final Logger LOG = Logger.getLogger(If.class.getName());
@@ -37,10 +35,7 @@ public class If implements Action {
   }
 
   public WebDriver dwork (WebDriver driver, String[] args) {
-    String s = arg;
-    if (isMatchARG(arg)) {
-      s = args[getARGNumber(arg)];
-    }
+    String s = Args.replace(arg, args);
     LOG.info("If elem " + elem.query + " " + operator + " " + s + ".");
     if (judge(driver, s)) {
       if (then != null) {
@@ -107,22 +102,6 @@ public class If implements Action {
       return !driver.findElements(elem.getBy()).isEmpty();
     } else {
       return !elem.parent.get(driver).findElements(elem.getBy()).isEmpty();
-    }
-  }
-
-  private boolean isMatchARG (String input) {
-    boolean isMatch = Pattern.matches("___ARG_\\d+___", input);
-    return isMatch;
-  }
-
-  private int getARGNumber (String input) {
-    String pattern = "(?<=___ARG_)\\d+(?=___)";
-    Pattern r = Pattern.compile(pattern);
-    Matcher m = r.matcher(input);
-    if (m.find()) {
-      return Integer.parseInt(m.group(0));
-    } else {
-      return -1;
     }
   }
 }

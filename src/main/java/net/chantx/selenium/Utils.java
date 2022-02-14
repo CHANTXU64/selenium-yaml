@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverLogLevel;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.FileInputStream;
@@ -20,10 +21,15 @@ public class Utils {
   private static final Logger LOG = Logger.getLogger(Utils.class.getName());
 
   public static Map<String, Object> parse (String fileName) {
-    Yaml p = new Yaml();
+    return parse(fileName, new LoaderOptions());
+  }
+
+  public static Map<String, Object> parse (String fileName,
+      LoaderOptions options) {
+    Yaml p = new Yaml(options);
     Map<String, Object> m = null;
     try {
-      m = p.load(new FileInputStream(fileName));
+      m = p.load(new FileInputStream(new File(fileName)));
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -32,7 +38,12 @@ public class Utils {
   }
 
   public static Map<String, Object> parse (InputStream input) {
-    Yaml p = new Yaml();
+    return parse(input, new LoaderOptions());
+  }
+
+  public static Map<String, Object> parse (InputStream input,
+      LoaderOptions options) {
+    Yaml p = new Yaml(options);
     Map<String, Object> m = p.load(input);
     assert m != null;
     return m;

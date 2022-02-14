@@ -23,7 +23,7 @@ public class Utils {
     Yaml p = new Yaml();
     Map<String, Object> m = null;
     try {
-      m = p.load(new FileInputStream(new File(fileName)));
+      m = p.load(new FileInputStream(fileName));
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -33,8 +33,7 @@ public class Utils {
 
   public static Map<String, Object> parse (InputStream input) {
     Yaml p = new Yaml();
-    Map<String, Object> m = null;
-    m = p.load(input);
+    Map<String, Object> m = p.load(input);
     assert m != null;
     return m;
   }
@@ -46,6 +45,7 @@ public class Utils {
     } catch (IOException e) {
       e.printStackTrace();
     }
+    assert tempFile != null;
     String tempFileName = tempFile.getPath();
     System.setProperty("webdriver.chrome.logfile", tempFileName);
     System.setProperty("webdriver.chrome.verboseLogging", "true");
@@ -59,8 +59,7 @@ public class Utils {
     if (!imagesEnabled) {
       chromeOptions.addArguments("blink-settings=imagesEnabled=false");
     }
-    WebDriver driver = new ChromeDriver(chromeOptions);
-    return driver;
+    return new ChromeDriver(chromeOptions);
   }
 
   public static WebDriver dwork (Map<String, Object> m,

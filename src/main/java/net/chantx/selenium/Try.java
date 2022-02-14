@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 
 //TODO 增加Catch输出
 
-public class Try extends ArrayList<Action> implements Action{
+public class Try extends ArrayList<Action> implements Action {
   private static final Logger LOG = Logger.getLogger(Try.class.getName());
   private static long UNIQUE_ID = 0;
 

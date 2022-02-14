@@ -21,16 +21,32 @@ public class Elem {
     }
   }
 
+  public WebElement get (WebDriver driver, String[] args) {
+    if (parent == null) {
+      return driver.findElement(getBy(args));
+    } else {
+      return parent.get(driver, args).findElement(getBy(args));
+    }
+  }
+
   public By getBy () {
+    return getBy_main(query);
+  }
+
+  public By getBy (String[] args) {
+    return getBy_main(Args.replace(query, args));
+  }
+
+  private By getBy_main (String q) {
     return switch (by) {
-      case id -> By.id(query);
-      case xpath -> By.xpath(query);
-      case className -> By.className(query);
-      case cssSelector -> By.cssSelector(query);
-      case linkText -> By.linkText(query);
-      case name -> By.name(query);
-      case partialLinkText -> By.partialLinkText(query);
-      case tagName -> By.tagName(query);
+      case id -> By.id(q);
+      case xpath -> By.xpath(q);
+      case className -> By.className(q);
+      case cssSelector -> By.cssSelector(q);
+      case linkText -> By.linkText(q);
+      case name -> By.name(q);
+      case partialLinkText -> By.partialLinkText(q);
+      case tagName -> By.tagName(q);
     };
   }
 }

@@ -5,7 +5,7 @@ import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
-public class Args {
+class Args {
   private static final Logger LOG = Logger.getLogger(Args.class.getName());
 
   public static String replace (String str, String[] args) {

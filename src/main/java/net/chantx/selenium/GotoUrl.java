@@ -1,5 +1,6 @@
 package net.chantx.selenium;
 
+import java.util.Map;
 import java.util.logging.Logger;
 
 import org.openqa.selenium.WebDriver;
@@ -9,7 +10,7 @@ public class GotoUrl implements Action {
 
   public String url;
 
-  public WebDriver execute (WebDriver driver, String[] args) {
+  public WebDriver execute (WebDriver driver, Map<String, String> args) {
     LOG.info("Goto url: " + Args.replace(url, args));
     driver.get(url);
     return driver;

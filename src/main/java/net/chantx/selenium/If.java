@@ -2,6 +2,7 @@ package net.chantx.selenium;
 
 import org.openqa.selenium.WebDriver;
 
+import java.util.Map;
 import java.util.logging.Logger;
 
 public class If implements Action {
@@ -11,7 +12,7 @@ public class If implements Action {
   public Action then;
   public Action el;
 
-  public WebDriver execute (WebDriver driver, String[] args) {
+  public WebDriver execute (WebDriver driver, Map<String, String> args) {
     LOG.info("If elem " + condition.log(args));
     if (condition.isTrue(driver, args)) {
       if (then != null) {

@@ -36,3 +36,10 @@ buildNumber.properties
 
 .idea
 .settings
+.DS_Store
+
+.project
+selenium-yaml.eml
+selenium-yaml.iml
+.classpath
+.factorypath

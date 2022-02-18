@@ -6,6 +6,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.Map;
 
 class Condition {
   public Elem elem;
@@ -20,7 +21,7 @@ class Condition {
     elemClickable, elemNotClickable
   }
 
-  public boolean isTrue (WebDriver driver, String[] args) {
+  public boolean isTrue (WebDriver driver, Map<String, String> args) {
     String value = "";
     String arg = Args.replace(param, args);
     if (operator == Operator.valueEqual
@@ -61,7 +62,7 @@ class Condition {
     return Float.parseFloat(s);
   }
 
-  private boolean elemVisible (WebDriver driver, String[] args) {
+  private boolean elemVisible (WebDriver driver, Map<String, String> args) {
     if (elemExist(driver, args)) {
       return elem.get(driver, args).isDisplayed();
     } else {
@@ -69,11 +70,11 @@ class Condition {
     }
   }
 
-  private boolean elemExist (WebDriver driver, String[] args) {
+  private boolean elemExist (WebDriver driver, Map<String, String> args) {
     return !driver.findElements(elem.getBy(args)).isEmpty();
   }
 
-  private boolean elemClickable (WebDriver driver, String[] args) {
+  private boolean elemClickable (WebDriver driver, Map<String, String> args) {
     try {
       WebElement element = elem.get(driver, args);
       new WebDriverWait(driver, Duration.ofMillis(100))
@@ -84,7 +85,7 @@ class Condition {
     }
   }
 
-  public String log (String[] args) {
+  public String log (Map<String, String> args) {
     return elem.getQuery(args) + " " + operator
       + " " + Args.replace(param, args) + ".";
   }

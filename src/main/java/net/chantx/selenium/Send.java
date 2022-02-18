@@ -2,6 +2,7 @@ package net.chantx.selenium;
 
 import org.openqa.selenium.WebDriver;
 
+import java.util.Map;
 import java.util.logging.Logger;
 
 public class Send implements Action {
@@ -10,7 +11,7 @@ public class Send implements Action {
   public Elem elem;
   public String text;
 
-  public WebDriver execute (WebDriver driver, String[] args) {
+  public WebDriver execute (WebDriver driver, Map<String, String> args) {
     String s = Args.replace(text, args);
     LOG.info("Send elem: " + elem.getQuery(args) + " - " + s);
     elem.get(driver, args).sendKeys(s);

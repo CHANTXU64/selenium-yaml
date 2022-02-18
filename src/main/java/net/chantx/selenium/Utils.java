@@ -15,6 +15,7 @@ import java.io.InputStream;
 import java.io.File;
 import java.util.Map;
 import java.util.logging.Logger;
+import java.util.HashMap;
 import java.util.List;
 
 public class Utils {
@@ -29,7 +30,7 @@ public class Utils {
     Yaml p = new Yaml(options);
     Map<String, Object> m = null;
     try {
-      m = p.load(new FileInputStream(new File(fileName)));
+      m = p.load(new FileInputStream(fileName));
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -75,11 +76,11 @@ public class Utils {
 
   public static WebDriver execute (Map<String, Object> m,
       WebDriver driver, String actionName) {
-    return execute(m, driver, actionName, new String[] {});
+    return execute(m, driver, actionName, map());
   }
 
   public static WebDriver execute (Map<String, Object> m,
-      WebDriver driver, String actionName, String[] args) {
+      WebDriver driver, String actionName, Map<String, String> args) {
     assert m.get(actionName) instanceof Action;
     Action s = (Action) m.get(actionName);
     s.execute(driver, args);
@@ -88,11 +89,11 @@ public class Utils {
 
   public static WebElement getElem (Map<String, Object> m,
       WebDriver driver, String elemName) {
-    return getElem(m, driver, elemName, new String[] {});
+    return getElem(m, driver, elemName, map());
   }
 
   public static WebElement getElem (Map<String, Object> m,
-      WebDriver driver, String elemName, String[] args) {
+      WebDriver driver, String elemName, Map<String, String> args) {
     assert m.get(elemName) instanceof Elem;
     Elem elem = (Elem) m.get(elemName);
     return elem.get(driver, args);
@@ -100,13 +101,23 @@ public class Utils {
 
   public static List<WebElement> getElems (Map<String, Object> m,
       WebDriver driver, String elemsName) {
-    return getElems(m, driver, elemsName, new String[] {});
+    return getElems(m, driver, elemsName, map());
   }
 
   public static List<WebElement> getElems (Map<String, Object> m,
-      WebDriver driver, String elemsName, String[] args) {
+      WebDriver driver, String elemsName, Map<String, String> args) {
     assert m.get(elemsName) instanceof Elems;
     Elems elems = (Elems) m.get(elemsName);
     return elems.get(driver, args);
+  }
+
+  public static Map<String, String> map () {
+    return new HashMap<>();
+  }
+
+  public static Map<String, String> map (String key, String value) {
+    Map<String, String> m = new HashMap<>();
+    m.put(key, value);
+    return m;
   }
 }

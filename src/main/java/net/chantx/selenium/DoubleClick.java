@@ -1,5 +1,6 @@
 package net.chantx.selenium;
 
+import java.util.Map;
 import java.util.logging.Logger;
 
 import org.openqa.selenium.WebDriver;
@@ -11,7 +12,7 @@ public class DoubleClick implements Action {
 
   public Elem elem;
 
-  public WebDriver execute (WebDriver driver, String[] args) {
+  public WebDriver execute (WebDriver driver, Map<String, String> args) {
     LOG.info("DoubleClick elem: " + elem.getQuery(args));
     Actions action = new Actions(driver);
     action.doubleClick(elem.get(driver, args)).perform();

@@ -1,5 +1,6 @@
 package net.chantx.selenium;
 
+import java.util.Map;
 import java.util.logging.Logger;
 
 import org.openqa.selenium.WebDriver;
@@ -10,13 +11,13 @@ public class PressKeys implements Action {
   public Elem elem;
   public CharSequence[] keys;
 
-  public WebDriver execute (WebDriver driver, String[] args) {
+  public WebDriver execute (WebDriver driver, Map<String, String> args) {
     log(args);
     elem.get(driver, args).sendKeys(keys);
     return driver;
   }
 
-  private void log (String[] args) {
+  private void log (Map<String, String> args) {
     StringBuffer buf = new StringBuffer();
     buf.append(keys[0]);
     for (int i = 1; i < keys.length; ++i) {

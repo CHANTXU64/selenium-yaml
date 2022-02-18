@@ -2,6 +2,7 @@ package net.chantx.selenium;
 
 import org.openqa.selenium.WebDriver;
 
+import java.util.Map;
 import java.util.logging.Logger;
 
 public class Try implements Action {
@@ -13,7 +14,7 @@ public class Try implements Action {
   public Action tryit;
   public Action except;
 
-  public WebDriver execute (WebDriver driver, String[] args) {
+  public WebDriver execute (WebDriver driver, Map<String, String> args) {
     LOG.info("Try execute, uid: " + uid);
     try {
       tryit.execute(driver, args);

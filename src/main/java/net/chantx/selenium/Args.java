@@ -1,6 +1,6 @@
 package net.chantx.selenium;
 
-import java.util.Arrays;
+import java.util.Map;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -8,7 +8,7 @@ import java.util.regex.Matcher;
 class Args {
   private static final Logger LOG = Logger.getLogger(Args.class.getName());
 
-  public static String replace (String str, String[] args) {
+  public static String replace (String str, Map<String, String> args) {
     while (isMatch(str)) {
       str = replaceFirstMatch(str, args);
     }
@@ -16,31 +16,31 @@ class Args {
   }
 
   protected static boolean isMatch (String str) {
-    Pattern r = Pattern.compile("___ARG_\\d+___");
+    Pattern r = Pattern.compile("___ARG_[a-z,A-Z,0-9]+___");
     Matcher m = r.matcher(str);
     return m.find();
   }
 
-  protected static String replaceFirstMatch (String str, String[] args) {
-    int index = getArgIndexNumber(str);
-    String match = "___ARG_" + index + "___";
-    if (args.length - 1 < index) {
-      LOG.warning("\"" + str + "\" index out of bounds, args: "
-          + Arrays.toString(args));
+  protected static String replaceFirstMatch (String str,
+      Map<String, String> args) {
+    String key = getArgKey(str);
+    String match = "___ARG_" + key + "___";
+    if (args.get(key) == null) {
+      LOG.warning("\"" + str + "\" key not exist, args: " + args.toString());
       return str.replace(match, "");
     }
-    return str.replace(match, args[index]);
+    return str.replace(match, args.get(key));
   }
 
-  protected static int getArgIndexNumber (String str) {
-    String pattern = "(?<=___ARG_)\\d+(?=___)";
+  protected static String getArgKey (String str) {
+    String pattern = "(?<=___ARG_)[a-z,A-Z,0-9]+(?=___)";
     Pattern r = Pattern.compile(pattern);
     Matcher m = r.matcher(str);
     if (m.find()) {
-      return Integer.parseInt(m.group(0));
+      return m.group(0);
     } else {
-      LOG.warning("\"" + str + "\" get index error.");
-      return -1;
+      LOG.warning("\"" + str + "\" get key error.");
+      return "";
     }
   }
 }

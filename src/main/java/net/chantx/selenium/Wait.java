@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.Map;
 import java.util.logging.Logger;
 
 public class Wait implements Action {
@@ -20,15 +21,15 @@ public class Wait implements Action {
     visible, exist, notVisible, notExist, clickable, notClickable
   }
 
-  public WebDriver execute (WebDriver driver, String[] args) {
+  public WebDriver execute (WebDriver driver, Map<String, String> args) {
     LOG.info("Wait elem: " + elem.getQuery(args)
         + " - " + until + " - " + timeout);
     new WebDriverWait(driver, Duration.ofSeconds(timeout))
-      .until(getUntil(driver, args));
+      .until(getUntil(args));
     return driver;
   }
 
-  private ExpectedCondition<Boolean> getUntil (WebDriver driver, String[] args) {
+  private ExpectedCondition<Boolean> getUntil (Map<String, String> args) {
     By by = elem.getBy(args);
     return switch (until) {
       case visible -> ExpectedConditions

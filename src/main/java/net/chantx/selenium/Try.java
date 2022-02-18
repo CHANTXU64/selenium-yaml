@@ -2,24 +2,23 @@ package net.chantx.selenium;
 
 import org.openqa.selenium.WebDriver;
 
-import java.util.ArrayList;
 import java.util.logging.Logger;
 
-public class Try extends ArrayList<Action> implements Action {
+public class Try implements Action {
   private static final Logger LOG = Logger.getLogger(Try.class.getName());
   private static long UNIQUE_ID = 0;
 
   private final long uid = ++UNIQUE_ID;
 
+  public Action tryit;
+  public Action except;
+
   public WebDriver dwork (WebDriver driver, String[] args) {
-    LOG.info("Try dwork " + uid + ", count: " + size());
+    LOG.info("Try dwork " + uid);
     try {
-      for (int i = 0; i < size(); ++i) {
-        Action step = get(i);
-        driver = step.dwork(driver, args);
-      }
+      tryit.dwork(driver, args);
     } catch (Exception e) {
-      e.printStackTrace();
+      except.dwork(driver, args);
     }
     LOG.info("Try END " + uid);
     return driver;

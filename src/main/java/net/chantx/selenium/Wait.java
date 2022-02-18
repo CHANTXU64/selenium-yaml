@@ -22,6 +22,8 @@ public class Wait implements Action {
   }
 
   public WebDriver execute (WebDriver driver, Map<String, String> args) {
+    assert elem != null;
+    assert until != null;
     LOG.info("Wait elem: " + elem.getQuery(args)
         + " - " + until + " - " + timeout);
     new WebDriverWait(driver, Duration.ofSeconds(timeout))

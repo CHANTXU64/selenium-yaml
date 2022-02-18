@@ -17,9 +17,13 @@ public class Try implements Action {
   public WebDriver execute (WebDriver driver, Map<String, String> args) {
     LOG.info("Try execute, uid: " + uid);
     try {
-      tryit.execute(driver, args);
+      if (tryit != null) {
+        tryit.execute(driver, args);
+      }
     } catch (Exception e) {
-      except.execute(driver, args);
+      if (except != null) {
+        except.execute(driver, args);
+      }
     }
     LOG.info("Try END " + uid);
     return driver;

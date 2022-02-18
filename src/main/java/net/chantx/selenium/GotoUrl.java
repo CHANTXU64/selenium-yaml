@@ -11,6 +11,7 @@ public class GotoUrl implements Action {
   public String url;
 
   public WebDriver execute (WebDriver driver, Map<String, String> args) {
+    assert url != null;
     LOG.info("Goto url: " + Args.replace(url, args));
     driver.get(url);
     return driver;

@@ -13,6 +13,7 @@ public class RightClick implements Action {
   public Elem elem;
 
   public WebDriver execute (WebDriver driver, Map<String, String> args) {
+    assert elem != null;
     LOG.info("RightClick elem: " + elem.getQuery(args));
     Actions action = new Actions(driver);
     action.contextClick(elem.get(driver, args)).perform();

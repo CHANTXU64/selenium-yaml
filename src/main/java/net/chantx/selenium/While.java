@@ -12,6 +12,7 @@ public class While implements Action {
   public Action continues;
 
   public WebDriver execute (WebDriver driver, Map<String, String> args) {
+    assert condition != null;
     LOG.info("While elem " + condition.log(args));
     if (condition.isTrue(driver, args)) {
       if (continues != null) {

@@ -22,8 +22,13 @@ class Condition {
   }
 
   public boolean isTrue (WebDriver driver, Map<String, String> args) {
+    assert elem != null;
+    assert operator != null;
     String value = "";
-    String arg = Args.replace(param, args);
+    String arg = "";
+    if (param != null) {
+      arg = Args.replace(param, args);
+    }
     if (operator == Operator.valueEqual
         || operator == Operator.valueNotEqual
         || operator == Operator.valueLessThanOrEqual
@@ -86,7 +91,13 @@ class Condition {
   }
 
   public String log (Map<String, String> args) {
-    return elem.getQuery(args) + " " + operator
-      + " " + Args.replace(param, args) + ".";
+    assert elem != null;
+    assert operator != null;
+    if (param == null) {
+      return elem.getQuery(args) + " " + operator + ".";
+    } else {
+      return elem.getQuery(args) + " " + operator
+        + " " + Args.replace(param, args) + ".";
+    }
   }
 }

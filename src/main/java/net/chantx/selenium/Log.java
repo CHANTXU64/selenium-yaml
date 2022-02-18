@@ -11,6 +11,7 @@ public class Log implements Action {
   public String info;
 
   public WebDriver execute (WebDriver driver, Map<String, String> args) {
+    assert info != null;
     LOG.info("Log: " + Args.replace(info, args));
     return driver;
   }

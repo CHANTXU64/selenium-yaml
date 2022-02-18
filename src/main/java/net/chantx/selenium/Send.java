@@ -12,6 +12,8 @@ public class Send implements Action {
   public String text;
 
   public WebDriver execute (WebDriver driver, Map<String, String> args) {
+    assert elem != null;
+    assert text != null;
     String s = Args.replace(text, args);
     LOG.info("Send elem: " + elem.getQuery(args) + " - " + s);
     elem.get(driver, args).sendKeys(s);

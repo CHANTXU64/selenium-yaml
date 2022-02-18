@@ -13,6 +13,7 @@ public class If implements Action {
   public Action el;
 
   public WebDriver execute (WebDriver driver, Map<String, String> args) {
+    assert condition != null;
     LOG.info("If elem " + condition.log(args));
     if (condition.isTrue(driver, args)) {
       if (then != null) {

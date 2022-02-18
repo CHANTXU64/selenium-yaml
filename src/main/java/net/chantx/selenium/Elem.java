@@ -15,6 +15,7 @@ public class Elem {
   }
 
   public String getQuery (Map<String, String> args) {
+    assert query != null;
     if (parent == null) {
       return Args.replace(query, args);
     } else {

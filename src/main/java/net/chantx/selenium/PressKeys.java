@@ -12,6 +12,8 @@ public class PressKeys implements Action {
   public CharSequence[] keys;
 
   public WebDriver execute (WebDriver driver, Map<String, String> args) {
+    assert elem != null;
+    assert keys != null;
     log(args);
     elem.get(driver, args).sendKeys(keys);
     return driver;

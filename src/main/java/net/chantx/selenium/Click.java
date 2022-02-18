@@ -11,6 +11,7 @@ public class Click implements Action {
   public Elem elem;
 
   public WebDriver execute (WebDriver driver, Map<String, String> args) {
+    assert elem != null;
     LOG.info("Click elem: " + elem.getQuery(args));
     elem.get(driver, args).click();
     return driver;

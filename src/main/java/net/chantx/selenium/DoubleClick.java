@@ -12,7 +12,7 @@ public class DoubleClick implements Action {
   public Elem elem;
 
   public WebDriver dwork (WebDriver driver, String[] args) {
-    LOG.info("DoubleClick elem: " + elem.by + " - " + elem.getQuery(args));
+    LOG.info("DoubleClick elem: " + elem.getQuery(args));
     Actions action = new Actions(driver);
     action.doubleClick(elem.get(driver, args)).perform();
     return driver;

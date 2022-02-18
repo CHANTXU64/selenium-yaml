@@ -22,7 +22,6 @@ public class PressKeys implements Action {
     for (int i = 1; i < keys.length; ++i) {
       buf.append(",").append(keys[i]);
     }
-    LOG.info("PressKeys elem: " + elem.by + " - "
-        + elem.getQuery(args) + "\nkeys: " + buf);
+    LOG.info("PressKeys elem: " + elem.getQuery(args) + "\nkeys: " + buf);
   }
 }

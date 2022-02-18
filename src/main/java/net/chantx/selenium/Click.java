@@ -10,7 +10,7 @@ public class Click implements Action {
   public Elem elem;
 
   public WebDriver dwork (WebDriver driver, String[] args) {
-    LOG.info("Click elem: " + elem.by + " - " + elem.getQuery(args));
+    LOG.info("Click elem: " + elem.getQuery(args));
     elem.get(driver, args).click();
     return driver;
   }

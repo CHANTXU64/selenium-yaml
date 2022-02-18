@@ -8,32 +8,23 @@ import java.util.List;
 
 public class Elems {
   public Elem parent;
-  public Elem.ByType by;
   public String query;
 
   public List<WebElement> get (WebDriver driver, String[] args) {
-    if (parent == null) {
-      return driver.findElements(getBy(args));
-    } else {
-      return parent.get(driver, args).findElements(getBy(args));
-    }
+    return driver.findElements(getBy(args));
   }
 
   public String getQuery (String[] args) {
-    return Args.replace(query, args);
+    if (parent == null) {
+      return Args.replace(query, args);
+    } else {
+      return parent.getQuery(args) +
+        Args.replace(query, args).replaceAll("^\\.", "");
+    }
   }
 
   public By getBy (String[] args) {
     String q = getQuery(args);
-    return switch (by) {
-      case id -> By.id(q);
-      case xpath -> By.xpath(q);
-      case className -> By.className(q);
-      case cssSelector -> By.cssSelector(q);
-      case linkText -> By.linkText(q);
-      case name -> By.name(q);
-      case partialLinkText -> By.partialLinkText(q);
-      case tagName -> By.tagName(q);
-    };
+    return By.xpath(q);
   }
 }

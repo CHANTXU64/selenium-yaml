@@ -27,7 +27,6 @@ public class Send implements Action {
     for (int i = 1; i < str.length; ++i) {
       buf.append(",").append(str[i]);
     }
-    LOG.info("Send elem: " + elem.by + " - "
-        + elem.getQuery(args) + "\ntext: " + buf);
+    LOG.info("Send elem: " + elem.getQuery(args) + "\ntext: " + buf);
   }
 }

@@ -1,7 +1,11 @@
 package net.chantx.selenium;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.logging.Logger;
 
 public class If implements Action {
@@ -17,12 +21,13 @@ public class If implements Action {
     valueEqual, valueNotEqual, valueLessThan, valueLessThanOrEqual,
     valueGreaterThan, valueGreaterThanOrEqual, textEqual, textNotEqual,
     textLessThan, textLessThanOrEqual, textGreaterThan, textGreaterThanOrEqual,
-    elemVisible, elemNotVisible, elemExist, elemNotExist
+    elemVisible, elemNotVisible, elemExist, elemNotExist,
+    elemClickable, elemNotClickable
   }
 
   public WebDriver dwork (WebDriver driver, String[] args) {
     String s = Args.replace(arg, args);
-    LOG.info("If elem " + elem.query + " " + operator + " " + s + ".");
+    LOG.info("If elem " + elem.getQuery(args) + " " + operator + " " + s + ".");
     if (judge(driver, s, args)) {
       if (then != null) {
         then.dwork(driver, args);
@@ -66,6 +71,8 @@ public class If implements Action {
       case elemNotVisible -> !elemVisible(driver, args);
       case elemExist -> elemExist(driver, args);
       case elemNotExist -> !elemExist(driver, args);
+      case elemClickable -> elemClickable(driver, args);
+      case elemNotClickable -> !elemClickable(driver, args);
     };
   }
 
@@ -82,11 +89,17 @@ public class If implements Action {
   }
 
   private boolean elemExist (WebDriver driver, String[] args) {
-    if (elem.parent == null) {
-      return !driver.findElements(elem.getBy(args)).isEmpty();
-    } else {
-      return !elem.parent.get(driver, args)
-        .findElements(elem.getBy(args)).isEmpty();
+    return !driver.findElements(elem.getBy(args)).isEmpty();
+  }
+
+  private boolean elemClickable (WebDriver driver, String[] args) {
+    try {
+      WebElement element = elem.get(driver, args);
+      new WebDriverWait(driver, Duration.ofMillis(100))
+        .until(ExpectedConditions.elementToBeClickable(element));
+      return true;
+    } catch (Exception e) {
+      return false;
     }
   }
 }

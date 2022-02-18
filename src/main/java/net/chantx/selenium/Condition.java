@@ -8,7 +8,11 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 class Condition {
-  public static enum Operator {
+  public Elem elem;
+  public Operator operator;
+  public String param;
+
+  public enum Operator {
     valueEqual, valueNotEqual, valueLessThan, valueLessThanOrEqual,
     valueGreaterThan, valueGreaterThanOrEqual, textEqual, textNotEqual,
     textLessThan, textLessThanOrEqual, textGreaterThan, textGreaterThanOrEqual,
@@ -16,9 +20,9 @@ class Condition {
     elemClickable, elemNotClickable
   }
 
-  public static boolean isTrue (WebDriver driver, Elem elem, Operator operator,
-      String param, String[] args) {
+  public boolean isTrue (WebDriver driver, String[] args) {
     String value = "";
+    String arg = Args.replace(param, args);
     if (operator == Operator.valueEqual
         || operator == Operator.valueNotEqual
         || operator == Operator.valueLessThanOrEqual
@@ -34,45 +38,42 @@ class Condition {
       value = elem.get(driver, args).getText();
     }
     return switch (operator) {
-      case valueEqual, textEqual -> value.equals(param);
-      case valueNotEqual, textNotEqual -> !value.equals(param);
+      case valueEqual, textEqual -> value.equals(arg);
+      case valueNotEqual, textNotEqual -> !value.equals(arg);
       case valueLessThan, textLessThan ->
-        parseFloat(value) < parseFloat(param);
+        parseFloat(value) < parseFloat(arg);
       case valueLessThanOrEqual, textLessThanOrEqual ->
-        parseFloat(value) <= parseFloat(param);
+        parseFloat(value) <= parseFloat(arg);
       case valueGreaterThan, textGreaterThan ->
-        parseFloat(value) > parseFloat(param);
+        parseFloat(value) > parseFloat(arg);
       case valueGreaterThanOrEqual, textGreaterThanOrEqual ->
-        parseFloat(value) >= parseFloat(param);
-      case elemVisible -> elemVisible(driver, elem, args);
-      case elemNotVisible -> !elemVisible(driver, elem, args);
-      case elemExist -> elemExist(driver, elem, args);
-      case elemNotExist -> !elemExist(driver, elem, args);
-      case elemClickable -> elemClickable(driver, elem, args);
-      case elemNotClickable -> !elemClickable(driver, elem, args);
+        parseFloat(value) >= parseFloat(arg);
+      case elemVisible -> elemVisible(driver, args);
+      case elemNotVisible -> !elemVisible(driver, args);
+      case elemExist -> elemExist(driver, args);
+      case elemNotExist -> !elemExist(driver, args);
+      case elemClickable -> elemClickable(driver, args);
+      case elemNotClickable -> !elemClickable(driver, args);
     };
   }
 
-  private static float parseFloat (String s) {
+  private float parseFloat (String s) {
     return Float.parseFloat(s);
   }
 
-  private static boolean elemVisible (WebDriver driver,
-      Elem elem, String[] args) {
-    if (elemExist(driver, elem, args)) {
+  private boolean elemVisible (WebDriver driver, String[] args) {
+    if (elemExist(driver, args)) {
       return elem.get(driver, args).isDisplayed();
     } else {
       return false;
     }
   }
 
-  private static boolean elemExist (WebDriver driver,
-      Elem elem, String[] args) {
+  private boolean elemExist (WebDriver driver, String[] args) {
     return !driver.findElements(elem.getBy(args)).isEmpty();
   }
 
-  private static boolean elemClickable (WebDriver driver,
-      Elem elem, String[] args) {
+  private boolean elemClickable (WebDriver driver, String[] args) {
     try {
       WebElement element = elem.get(driver, args);
       new WebDriverWait(driver, Duration.ofMillis(100))
@@ -81,5 +82,10 @@ class Condition {
     } catch (Exception e) {
       return false;
     }
+  }
+
+  public String log (String[] args) {
+    return elem.getQuery(args) + " " + operator
+      + " " + Args.replace(param, args) + ".";
   }
 }

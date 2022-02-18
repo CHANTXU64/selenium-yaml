@@ -73,16 +73,16 @@ public class Utils {
     return new ChromeDriver(chromeOptions);
   }
 
-  public static WebDriver dwork (Map<String, Object> m,
+  public static WebDriver execute (Map<String, Object> m,
       WebDriver driver, String actionName) {
-    return dwork(m, driver, actionName, new String[] {});
+    return execute(m, driver, actionName, new String[] {});
   }
 
-  public static WebDriver dwork (Map<String, Object> m,
+  public static WebDriver execute (Map<String, Object> m,
       WebDriver driver, String actionName, String[] args) {
     assert m.get(actionName) instanceof Action;
     Action s = (Action) m.get(actionName);
-    s.dwork(driver, args);
+    s.execute(driver, args);
     return driver;
   }
 

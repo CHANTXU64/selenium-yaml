@@ -11,11 +11,11 @@ public class Steps extends ArrayList<Action> implements Action {
 
   private final long uid = ++UNIQUE_ID;
 
-  public WebDriver dwork (WebDriver driver, String[] args) {
-    LOG.info("Steps dwork " + uid + ", count: " + size());
+  public WebDriver execute (WebDriver driver, String[] args) {
+    LOG.info("Steps execute, uid: " + uid + ", count: " + size());
     for (int i = 0; i < size(); ++i) {
       Action step = get(i);
-      driver = step.dwork(driver, args);
+      driver = step.execute(driver, args);
     }
     LOG.info("Steps END " + uid);
     return driver;

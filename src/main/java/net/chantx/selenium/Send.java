@@ -10,7 +10,7 @@ public class Send implements Action {
   public Elem elem;
   public String text;
 
-  public WebDriver dwork (WebDriver driver, String[] args) {
+  public WebDriver execute (WebDriver driver, String[] args) {
     String s = Args.replace(text, args);
     LOG.info("Send elem: " + elem.getQuery(args) + " - " + s);
     elem.get(driver, args).sendKeys(s);

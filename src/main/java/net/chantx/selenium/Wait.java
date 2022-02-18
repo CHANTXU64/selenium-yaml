@@ -20,7 +20,7 @@ public class Wait implements Action {
     visible, exist, notVisible, notExist, clickable, notClickable
   }
 
-  public WebDriver dwork (WebDriver driver, String[] args) {
+  public WebDriver execute (WebDriver driver, String[] args) {
     LOG.info("Wait elem: " + elem.getQuery(args)
         + " - " + until + " - " + timeout);
     new WebDriverWait(driver, Duration.ofSeconds(timeout))

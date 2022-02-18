@@ -11,7 +11,7 @@ public class RightClick implements Action {
 
   public Elem elem;
 
-  public WebDriver dwork (WebDriver driver, String[] args) {
+  public WebDriver execute (WebDriver driver, String[] args) {
     LOG.info("RightClick elem: " + elem.getQuery(args));
     Actions action = new Actions(driver);
     action.contextClick(elem.get(driver, args)).perform();

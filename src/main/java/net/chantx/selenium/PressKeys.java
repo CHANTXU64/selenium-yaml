@@ -10,7 +10,7 @@ public class PressKeys implements Action {
   public Elem elem;
   public CharSequence[] keys;
 
-  public WebDriver dwork (WebDriver driver, String[] args) {
+  public WebDriver execute (WebDriver driver, String[] args) {
     log(args);
     elem.get(driver, args).sendKeys(keys);
     return driver;

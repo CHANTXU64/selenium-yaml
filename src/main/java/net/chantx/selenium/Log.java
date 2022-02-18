@@ -9,7 +9,7 @@ public class Log implements Action {
 
   public String info;
 
-  public WebDriver dwork (WebDriver driver, String[] args) {
+  public WebDriver execute (WebDriver driver, String[] args) {
     LOG.info("Log: " + Args.replace(info, args));
     return driver;
   }

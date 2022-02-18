@@ -11,15 +11,15 @@ public class If implements Action {
   public Action then;
   public Action el;
 
-  public WebDriver dwork (WebDriver driver, String[] args) {
+  public WebDriver execute (WebDriver driver, String[] args) {
     LOG.info("If elem " + condition.log(args));
     if (condition.isTrue(driver, args)) {
       if (then != null) {
-        then.dwork(driver, args);
+        then.execute(driver, args);
       }
     } else {
       if (el != null) {
-        el.dwork(driver, args);
+        el.execute(driver, args);
       }
     }
     return driver;

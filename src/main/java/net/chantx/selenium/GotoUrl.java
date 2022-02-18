@@ -9,7 +9,7 @@ public class GotoUrl implements Action {
 
   public String url;
 
-  public WebDriver dwork (WebDriver driver, String[] args) {
+  public WebDriver execute (WebDriver driver, String[] args) {
     LOG.info("Goto url: " + Args.replace(url, args));
     driver.get(url);
     return driver;

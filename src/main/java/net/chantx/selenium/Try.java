@@ -13,12 +13,12 @@ public class Try implements Action {
   public Action tryit;
   public Action except;
 
-  public WebDriver dwork (WebDriver driver, String[] args) {
-    LOG.info("Try dwork " + uid);
+  public WebDriver execute (WebDriver driver, String[] args) {
+    LOG.info("Try execute, uid: " + uid);
     try {
-      tryit.dwork(driver, args);
+      tryit.execute(driver, args);
     } catch (Exception e) {
-      except.dwork(driver, args);
+      except.execute(driver, args);
     }
     LOG.info("Try END " + uid);
     return driver;

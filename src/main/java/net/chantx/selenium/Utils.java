@@ -83,6 +83,7 @@ public class Utils {
       WebDriver driver, String actionName, Map<String, String> args) {
     assert m.get(actionName) instanceof Action;
     Action s = (Action) m.get(actionName);
+    if (s == null) LOG.warning(actionName + " not found in yaml.");
     s.execute(driver, args);
     return driver;
   }
@@ -96,6 +97,7 @@ public class Utils {
       WebDriver driver, String elemName, Map<String, String> args) {
     assert m.get(elemName) instanceof Elem;
     Elem elem = (Elem) m.get(elemName);
+    if (elem == null) LOG.warning(elemName + " not found in yaml.");
     return elem.get(driver, args);
   }
 
@@ -108,6 +110,7 @@ public class Utils {
       WebDriver driver, String elemsName, Map<String, String> args) {
     assert m.get(elemsName) instanceof Elems;
     Elems elems = (Elems) m.get(elemsName);
+    if (elems == null) LOG.warning(elemsName + " not found in yaml.");
     return elems.get(driver, args);
   }
 

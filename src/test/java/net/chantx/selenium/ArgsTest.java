@@ -1,12 +1,12 @@
 package net.chantx.selenium;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static org.junit.Assert.assertFalse;
 
 import org.junit.Test;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -108,5 +108,6 @@ public class ArgsTest extends Args {
       assertEquals(args.get(key_0),
           Args.replace("___ARG_" + key + "______ARG_" + key_0 + "___", args));
     }
+    assertNotEquals("202202262026", Args.replace("___ARG_c_time___", Utils.map("c_time", "202202262026")));
   }
 }

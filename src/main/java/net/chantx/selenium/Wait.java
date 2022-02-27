@@ -18,7 +18,7 @@ public class Wait implements Action {
   public long timeout;
 
   public enum UntilType {
-    visible, exist, notVisible, notExist, clickable, notClickable
+    visible, exist, notVisible, notExist, clickable, notClickable, time
   }
 
   public WebDriver execute (WebDriver driver, Map<String, String> args) {
@@ -26,8 +26,14 @@ public class Wait implements Action {
     assert until != null;
     LOG.info("Wait elem: " + elem.getQuery(args)
         + " - " + until + " - " + timeout);
-    new WebDriverWait(driver, Duration.ofSeconds(timeout))
-      .until(getUntil(args));
+    if (until == UntilType.time) {
+      try {
+        Thread.sleep(timeout);
+      } catch (Exception e) { }
+    } else {
+      new WebDriverWait(driver, Duration.ofSeconds(timeout))
+        .until(getUntil(args));
+    }
     return driver;
   }
 
@@ -46,6 +52,7 @@ public class Wait implements Action {
         .and(ExpectedConditions.elementToBeClickable(by));
       case notClickable -> ExpectedConditions
         .not(ExpectedConditions.elementToBeClickable(by));
+      case time -> null;
     };
   }
 }
